@@ -4,19 +4,47 @@
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <title></title>
-    <script type="text/javascript">
-   		
-    </script>
+    <link rel="stylesheet" type="text/css" href='http://fonts.googleapis.com/css?family=Condiment'>
+    <link rel="stylesheet" type="text/css" href="css/new_file.css"/>
     <style>
     	.picBox{
     		position: relative;
+    		width:330px;
+    		height:220px;
+    	}
+    	p{
+    		position:absolute;
+    		top:0;
+    		left:50%;
+    		top:50%;
+    		width:330px;
+    		margin-left:-165px;
+    		height:100px;
+    		margin-top:-70px;
+    		line-height: 100px;
+    		font-size:50px;
+    		font-weight:700;
+    		text-align: center;
+    		font-family: Condiment, cursive;
     	}
     </style>
+    <!--<link rel="stylesheet" type="text/css" href="css/new_file.css"/>-->
+    
 </head>
 <body>
 	<div class="picBox">
 		<img src="img/back.jpg"/>
-		<p style="position:absolute;top:0;left:0;transform:translate(50%,50%);font-size:50px;">HELLO</p>
+		<p id="p"></p>
 	</div>
+	<div>
+		输入字体
+	</div>
+	<input type="text" id="input" value=""  style="width:200px;height:50px;line-height: 50px;"/>
+	<button onclick="setText()">确定</button>
+	<script>
+		function setText(){
+			document.getElementById('p').innerHTML = document.getElementById('input').value;
+		}
+	</script>
 </body>
 </html>
