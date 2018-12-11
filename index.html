@@ -1,50 +1,80 @@
-<!DOCTYPE html>
+<!DOCTYPE HTML>
 <html>
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <title></title>
-    <!--<link rel="stylesheet" type="text/css" href='http://fonts.googleapis.com/css?family=Condiment'>-->
-    <link rel="stylesheet" type="text/css" href="css/new_file.css"/>
-    <style>
-    	.picBox{
-    		position: relative;
-    		width:330px;
-    		height:220px;
-    	}
-    	p{
-    		position:absolute;
-    		top:0;
-    		left:50%;
-    		top:50%;
-    		width:330px;
-    		margin-left:-165px;
-    		height:100px;
-    		margin-top:-70px;
-    		line-height: 100px;
-    		font-size:50px;
-    		font-weight:700;
-    		text-align: center;
-    		font-family: Condiment, cursive;
-    	}
-    </style>
-    <!--<link rel="stylesheet" type="text/css" href="css/new_file.css"/>-->
-    
-</head>
-<body>
-	<div class="picBox">
-		<img src="img/back.jpg"/>
-		<p id="p"></p>
-	</div>
-	<div>
-		输入字体
-	</div>
-	<input type="text" id="input" value=""  style="width:200px;height:50px;line-height: 50px;"/>
-	<button onclick="setText()">确定</button>
-	<script>
-		function setText(){
-			document.getElementById('p').innerHTML = document.getElementById('input').value;
-		}
-	</script>
-</body>
+  <head>
+		<meta charset="UTF-8">
+		<title></title>
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+ 
+  </head>
+  
+  <body style="padding:0;margin:0;overflow: hidden;">
+  	
+  	<canvas style="border-bottom:1px solid #ccc;" height="240" id="myCanvas" ></canvas>
+    <button onclick="clearcanvas()">清空</button><br>
+    <span>字体大小：</span>
+    <select id="myselect">
+    	<option value="1">1</option>	
+    	<option value="2">2</option>	
+    	<option value="3">3</option>	
+    	<option value="4">4</option>	
+    	<option value="5">5</option>	
+    	<option value="6">6</option>	
+    </select>
+    <script>
+    	console.log(document.body.clientWidth);
+    		var pagewidth = document.body.clientWidth;
+    		var pageheight = pagewidth*2/3;
+    		var c=document.getElementById("myCanvas");
+    		c.setAttribute("width",pagewidth);
+    		c.setAttribute("height",pageheight);
+				var ctx=c.getContext("2d");
+				var img = new Image();
+				img.src="img/back.jpg";
+				img.onload = function(){
+					ctx.drawImage(img, 0, 0);
+				}
+		    var t_start_x = 0;
+		    var t_start_y = 0;
+		    var startmove = false;
+				document.addEventListener('touchstart',start, false);
+		    document.addEventListener('touchmove',move, false);
+		    document.addEventListener('touchend',end, false);
+		    function end(){
+		    	startmove = false;
+		    }
+		    var linewidth = 1;
+		    function start(event){
+		    	linewidth = document.getElementById("myselect").value;
+		    	event.preventDefault();
+		    	if(!startmove){
+			        var event = event || window.event;
+			        t_start_x = event.touches[0].clientX;
+			        t_start_y = event.touches[0].clientY;
+		    				console.log(t_start_x,t_start_y);
+		    				startmove = true;
+		    	}
+		    }
+		    function move(event){
+		    	event.preventDefault();
+		    	if(startmove){
+				        var event = event || window.event;
+		            t_end_x = event.touches[0].clientX;
+		            t_end_y = event.touches[0].clientY;
+		    				console.log(t_start_x,t_start_y,t_end_x,t_end_y);
+		    				
+		    				ctx.beginPath();
+								ctx.lineCap="round";
+								ctx.lineWidth=linewidth;
+								ctx.moveTo(t_start_x,t_start_y);
+								ctx.lineTo(t_end_x,t_end_y);
+								ctx.stroke();
+								t_start_x = t_end_x;
+								t_start_y = t_end_y;
+		    	}
+		    }
+		    function clearcanvas(){
+		    	ctx.drawImage(img, 0, 0);
+		    }
+    </script>
+  </body>
 </html>
